@@ -8,4 +8,6 @@ router.get('/maintenance', maintenanceController.getAllMaintenanceRecords);
 // Define the POST route
 router.post('/maintenance', maintenanceController.addMaintenanceRecord);
 
+router.put('/maintenance/:id', maintenanceController.updateMaintenanceRecord);
+
 module.exports = router;

@@ -12,10 +12,11 @@ app.use(cors());
 app.use(express.json());
 
 // Database Connection
-connectToDatabase(); 
+connectToDatabase();
 
 // Routes
 app.use("/api", maintenanceRoutes); // Prefix all maintenance routes with `/api`
+
 
 // Start Server
 const PORT = 5000; 

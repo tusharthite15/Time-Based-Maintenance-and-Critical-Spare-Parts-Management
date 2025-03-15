@@ -1,6 +1,5 @@
 const Maintenance = require("../models/index");
 
-// GET handler for all maintenance records
 exports.getAllMaintenanceRecords = async (req, res) => {
   // console.log("Received GET request for maintenance records."); 
   try {
@@ -14,9 +13,6 @@ exports.getAllMaintenanceRecords = async (req, res) => {
 
 };
 
-
-
-
 exports.addMaintenanceRecord = async (req, res) => {
   try {
     const newRecord = new Maintenance(req.body);
@@ -25,5 +21,19 @@ exports.addMaintenanceRecord = async (req, res) => {
   } catch (error) {
     console.error("Error adding maintenance record:", error);
     res.status(500).json({ message: "Error adding maintenance record", error });
+  }
+};
+
+exports.updateMaintenanceRecord = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const updatedRecord = await Maintenance.findByIdAndUpdate(id, req.body, { new: true });
+    if (!updatedRecord) {
+      return res.status(404).json({ message: "Record not found" });
+    }
+    res.status(200).json(updatedRecord);
+  } catch (error) {
+    console.error("Error updating record:", error);
+    res.status(500).json({ message: "Failed to update record" });
   }
 };

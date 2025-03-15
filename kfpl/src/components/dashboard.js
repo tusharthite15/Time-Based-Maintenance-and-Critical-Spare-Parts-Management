@@ -54,7 +54,7 @@ const Dashboard = () => {
 
   const openUpdateModal = (record) => {
     setSelectedRecord(record);
-    setFormData(record); // Pre-fill form with selected record's data
+    setFormData(record);
     setIsUpdateModalOpen(true);
   };
 
@@ -68,12 +68,9 @@ const Dashboard = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  
-
   const handleUpdateSubmit = async () => {
     try {
-      await axios.put(`http://localhost:5000/api/maintenance/${selectedRecord._id}`, formData);
-// 
+      await axios.put(`http://localhost:5000/api/maintenance/${selectedRecord.machine_id}`, formData);
       const response = await axios.get('http://localhost:5000/api/maintenance');
       setMaintenanceData(response.data);
       setFilteredData(response.data);
@@ -82,7 +79,6 @@ const Dashboard = () => {
       console.error("Error updating maintenance record:", error);
     }
   };
-
 
   return (
     <div className="dashboard-container">
@@ -252,6 +248,18 @@ const Dashboard = () => {
                   <div>
                     <label>Service Interval Days:</label>
                     <input type="number" name="service_interval_days" value={formData.service_interval_days || ''} onChange={handleUpdateChange} />
+                  </div>
+                  <div>
+                    <label>Maintenance Date</label>
+                    <input type="text" name="maintenance_date" value={formData.maintenance_date || ''} onChange={handleUpdateChange} />
+                  </div>
+                  <div>
+                    <label>Next Maintenance Date:</label>
+                    <input type="text" name="next_maintenance_date" value={formData.next_maintenance_date || ''} onChange={handleUpdateChange} />
+                  </div>
+                  <div>
+                    <label>Parts Replaced</label>
+                    <input type="text" name="parts_rexplaced" value={formData.parts_replaced || ''} onChange={handleUpdateChange} />
                   </div>
                   {/* Add more fields here as needed */}
                   <button className="update-submit-btn"type="submit">Save Changes</button>
